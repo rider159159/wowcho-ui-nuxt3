@@ -72,26 +72,15 @@ const query = ref({
   pageSize: 12
 })
 
-// 獲得募資活動
-// async function serverGetApiData() {
-//   const { data } = await useFetch("/proposal",{
-//     baseURL: process.env.BASE_API_URL,
-//     method:'GET',
-//     params:query.value,
-//     onResponse({ response }) {
-//       response._data = {
-//         ...response._data.data,
-//       }
-//     }
-//   })
-//   return data
-// }
+const runtimeConfig = useRuntimeConfig()
+const { apiBaseURL } = runtimeConfig.public
 
+// 獲得募資活動
 async function getApiData() {
   query.value.search = ''
   SEARCH_REF.value = ''
   const res  = await $fetch("/proposal",{
-    baseURL: process.env.BASE_API_URL,
+    baseURL: apiBaseURL,
     method:'GET',
     params:query.value,
   })
@@ -142,7 +131,7 @@ async function searchData() {
   query.value.category = 0
   query.value.order = 0
   const res  = await $fetch("/proposal/search",{
-    baseURL: process.env.BASE_API_URL,
+    baseURL: apiBaseURL,
     method:'GET',
     params:query.value,
   })

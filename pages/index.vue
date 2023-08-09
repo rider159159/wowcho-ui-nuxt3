@@ -34,11 +34,13 @@ const categories = [
     name: '休閒'
   }
 ]
+const runtimeConfig = useRuntimeConfig()
+const { apiBaseURL } = runtimeConfig.public
 
 async function getProposalList (queryObj) {
   const res = await useFetch('/proposal',{
     query: queryObj,
-    baseURL: process.env.BASE_API_URL,
+    baseURL:apiBaseURL,
     method:'GET',
     onResponse({ response }) {
       response._data = {

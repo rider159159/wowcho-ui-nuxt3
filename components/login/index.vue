@@ -5,6 +5,8 @@ const inSevenDays = new Date(new Date().getTime() + 7 * 24 * 60 * 60 * 1000)
 const  cookie = useCookie('wowcho',{
   expires:inSevenDays
 })
+const runtimeConfig = useRuntimeConfig()
+const { apiBaseURL } = runtimeConfig.public
 
 const store = userInfoStore()
 const { USER_INFO_REF } = storeToRefs(store)
@@ -29,7 +31,7 @@ function togglePasswordType(show, type) {
 async function submitForm(value) {
   const res = await $fetch("/login",{
     body:value,
-    baseURL: process.env.BASE_API_URL,
+    baseURL: apiBaseURL,
     method:'POST',
   })
   if (res.status !== 'Success') return
@@ -39,7 +41,7 @@ async function submitForm(value) {
 
 async function getProfile() {
   const res = await $fetch("/profile",{
-    baseURL: process.env.BASE_API_URL,
+    baseURL: apiBaseURL,
     method:'GET',
     headers:{
       Authorization:`Bearer ${cookie.value}`

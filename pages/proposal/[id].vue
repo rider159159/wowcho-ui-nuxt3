@@ -36,9 +36,12 @@ const categoryList = [
 ]
 const route = useRoute()
 const query = { proposalUrl: route.params.id }
+const runtimeConfig = useRuntimeConfig()
+const { apiBaseURL } = runtimeConfig.public
+
 const { data:proposal } = await useFetch('/proposal/details',{
   query,
-  baseURL: process.env.BASE_API_URL,
+  baseURL: apiBaseURL,
   method:'GET',
   onResponse({ response }) {
     response._data = {
