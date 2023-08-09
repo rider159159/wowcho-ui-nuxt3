@@ -1,7 +1,8 @@
 
 <script setup>
 const emits = defineEmits(['oauthLoginSuccess'])
-const oauthId = process.env.OAUTH_ID
+const runtimeConfig = useRuntimeConfig()
+const { apiBaseURL,oauthID } = runtimeConfig.public
 
 async function handleCredentialResponse (response) {
   const formBody = {
@@ -9,7 +10,7 @@ async function handleCredentialResponse (response) {
   }
   const res = await $fetch("/login/oauth",{
     body:formBody,
-    baseURL: process.env.BASE_API_URL,
+    baseURL: apiBaseURL,
     method:'POST',
   })
   if (res.status !== 'Success') return
@@ -31,7 +32,7 @@ onMounted(() => {
 <template>
   <div class="flex justify-center">
     <div id="g_id_onload"
-      :data-client_id="oauthId"
+      :data-client_id="oauthID"
       data-context="signin"
       data-ux_mode="popup"
       data-callback="handleCredentialResponse"

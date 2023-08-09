@@ -1,11 +1,12 @@
 <script setup>
 const { $swal } = useNuxtApp()
 
-
-async function submitForm(value:any) {
-  const res:any = await $fetch("/sign-up",{
+const runtimeConfig = useRuntimeConfig()
+const { apiBaseURL } = runtimeConfig.public
+async function submitForm(value) {
+  const res = await $fetch("/sign-up",{
     body:value,
-    baseURL: process.env.BASE_API_URL,
+    baseURL: apiBaseURL,
     method:'POST',
   })
   if (res.status !== 'Success') return
@@ -23,7 +24,7 @@ async function submitForm(value:any) {
 const passwordShow = ref(true)
 const passwordType = ref('password')
 
-function togglePasswordType(show:boolean, type:string) {
+function togglePasswordType(show, type) {
   passwordShow.value = show
   passwordType.value = type
 }

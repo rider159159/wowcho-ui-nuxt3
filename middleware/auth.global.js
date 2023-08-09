@@ -2,11 +2,12 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
   const  cookie = useCookie('wowcho')
   const USER_STORE = userInfoStore()
   const LOGIN_STORE = userLoginStore()
-
+  const runtimeConfig = useRuntimeConfig()
+  const { apiBaseURL } = runtimeConfig.public
   if (cookie.value) {
 
     const res = await $fetch("/profile",{
-      baseURL: process.env.BASE_API_URL,
+      baseURL: apiBaseURL,
       method:'GET',
       headers:{
         Authorization:`Bearer ${cookie.value}`

@@ -1,3 +1,5 @@
+import { Oauth } from ".nuxt/components";
+
 export default defineNuxtConfig({
   // dayjs-nuxt
   modules: ['nuxt-swiper','@pinia/nuxt','@unocss/nuxt',],
@@ -16,7 +18,7 @@ export default defineNuxtConfig({
     '@unocss/reset/tailwind-compat.css',
     '@mdi/font/css/materialdesignicons.min.css'
   ],
-  "app": {
+  app: {
     "head": {
       "viewport": "width=500, initial-scale=1",
       "title": "WowCho 渦潮募資網站",
@@ -34,10 +36,16 @@ export default defineNuxtConfig({
       ],
     }
   },
-  "vite": {
-    "define": {
-      "process.env": process.env,
-    },
+  runtimeConfig: {
+    public: {
+      apiBaseURL: process.env.NUXT_BASE_API_URL || 'https://wowchobackend.zeabur.app',
+      oauthID:  process.env.NUXT_OAUTH_ID || '725451058317-memrhkm0hp3tp0hkmrrr1dglr387u2lq.apps.googleusercontent.com'
+    }
   },
+  // "vite": {
+  //   "define": {
+  //     "process.env": process.env,
+  //   },
+  // },
 
 })
