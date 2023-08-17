@@ -34,10 +34,9 @@ export default defineNuxtConfig({
       ],
     }
   },
-  "vite": {
-    "define": {
-      "process.env": process.env,
-    },
-  },
-
+  runtimeConfig: {
+    public: {
+      BASE_API_URL: process.env.BASE_API_URL
+    }
+  }
 })
