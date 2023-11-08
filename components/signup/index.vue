@@ -1,11 +1,12 @@
 <script setup>
 const { $swal } = useNuxtApp()
+const config = useRuntimeConfig()
 
 
 async function submitForm(value:any) {
   const res:any = await $fetch("/sign-up",{
     body:value,
-    baseURL: process.env.BASE_API_URL,
+    baseURL: config.public.BASE_API_URL,
     method:'POST',
   })
   if (res.status !== 'Success') return

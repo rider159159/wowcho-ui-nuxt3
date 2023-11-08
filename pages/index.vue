@@ -1,4 +1,5 @@
 <script setup>
+const config = useRuntimeConfig()
 
 const categories = [
   {
@@ -38,7 +39,7 @@ const categories = [
 async function getProposalList (queryObj) {
   const res = await useFetch('/proposal',{
     query: queryObj,
-    baseURL: process.env.BASE_API_URL,
+    baseURL: config.public.BASE_API_URL,
     method:'GET',
     onResponse({ response }) {
       response._data = {
@@ -69,9 +70,7 @@ const [ { data:recentlyProposalList },{ data:hotProposalList },{ data:carouselPr
 </script>
 
 <template>
-  <div class="mx-auto flex flex-col items-center">
-  
-    <!-- Background -->
+  <div class="mx-auto flex flex-col items-center">    <!-- Background -->
     <div class="absolute left-0 top-0 -z-10">
       <img class="hidden md:block w-1/2" src="/bg_01.png">
       <img class="block md:hidden w-9/10" src="/bg_01_mb.png">
