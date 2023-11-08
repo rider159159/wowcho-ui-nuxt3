@@ -1,4 +1,5 @@
 <script setup>
+const config = useRuntimeConfig()
 
 const categoryList = [
   {
@@ -38,7 +39,7 @@ const route = useRoute()
 const query = { proposalUrl: route.params.id }
 const { data:proposal } = await useFetch('/proposal/details',{
   query,
-  baseURL: process.env.BASE_API_URL,
+  baseURL: config.public.BASE_API_URL,
   method:'GET',
   onResponse({ response }) {
     response._data = {
@@ -112,7 +113,9 @@ function categoryName (num = 8) {
         <!-- content -->
         <transition name="fade">
           <div v-show="content === 0" class="py-6 md:py-10 lg:gap-10">
+          <NuxtLink to="/">
             <div class="ProposalContent" v-html="proposal.description"></div>
+          </NuxtLink>
           </div>
         </transition>
         <!-- process -->

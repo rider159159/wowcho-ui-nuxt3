@@ -6,7 +6,7 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
   if (cookie.value) {
 
     const res = await $fetch("/profile",{
-      baseURL: process.env.BASE_API_URL,
+      baseURL: config.public.BASE_API_URL,
       method:'GET',
       headers:{
         Authorization:`Bearer ${cookie.value}`

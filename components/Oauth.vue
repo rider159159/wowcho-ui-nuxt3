@@ -2,6 +2,7 @@
 <script setup>
 const emits = defineEmits(['oauthLoginSuccess'])
 const oauthId = process.env.OAUTH_ID
+const config = useRuntimeConfig()
 
 async function handleCredentialResponse (response) {
   const formBody = {
@@ -9,7 +10,7 @@ async function handleCredentialResponse (response) {
   }
   const res = await $fetch("/login/oauth",{
     body:formBody,
-    baseURL: process.env.BASE_API_URL,
+    baseURL: config.public.BASE_API_URL,
     method:'POST',
   })
   if (res.status !== 'Success') return

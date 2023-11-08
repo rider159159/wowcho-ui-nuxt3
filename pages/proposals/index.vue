@@ -1,9 +1,11 @@
 <script setup>
 import { storeToRefs } from 'pinia'
 const { SEARCH_REF, SEARCH_CONTROL } = storeToRefs(searchStore())
+const config = useRuntimeConfig()
 
 const route = useRoute()
 const router = useRouter()
+
 // 分類列表
 const categories = [
   {
@@ -73,32 +75,29 @@ const query = ref({
 })
 
 // 獲得募資活動
-// async function serverGetApiData() {
-//   const { data } = await useFetch("/proposal",{
-//     baseURL: process.env.BASE_API_URL,
+const { data: proposalData = {
+  list:[]
+}, refresh:proposalRefresh } = await useAsyncData(
+  'proposal',
+  () => $fetch('/proposal',{
+  baseURL: config.public.BASE_API_URL,
+  method:'GET',
+  params:query.value,
+})
+  )
+
+// async function getApiData() {
+//   query.value.search = ''
+//   SEARCH_REF.value = ''
+//   const res  = await $fetch("/proposal",{
+//     baseURL: config.public.BASE_API_URL,
 //     method:'GET',
 //     params:query.value,
-//     onResponse({ response }) {
-//       response._data = {
-//         ...response._data.data,
-//       }
-//     }
 //   })
-//   return data
+//   if(res.status !== 'Success') return
+//   proposalList.value = res.data.list
+//   totalCount.value  = res.data.totalCount
 // }
-
-async function getApiData() {
-  query.value.search = ''
-  SEARCH_REF.value = ''
-  const res  = await $fetch("/proposal",{
-    baseURL: process.env.BASE_API_URL,
-    method:'GET',
-    params:query.value,
-  })
-  if(res.status !== 'Success') return
-  proposalList.value = res.data.list
-  totalCount.value  = res.data.totalCount
-}
 // 分類篩選相關
 // 分類下拉標題
 const categoryTitle = ref('')
@@ -108,7 +107,7 @@ function filterSelectCategory(item) {
   query.value.category = item.value
   query.value.page = 1
   categoryTitle.value = item.title
-  getApiData()
+  proposalRefresh()
 }
 // 分類 HTML
 const categoriesRef = ref(null)
@@ -129,7 +128,7 @@ const isShowSortList = ref(false)
 function sortProducts(item) {
   query.value.order = item.value
   sortTitle.value = item.title
-  getApiData()
+  proposalRefresh()
 }
 
 function closeSort() {
@@ -142,7 +141,7 @@ async function searchData() {
   query.value.category = 0
   query.value.order = 0
   const res  = await $fetch("/proposal/search",{
-    baseURL: process.env.BASE_API_URL,
+    baseURL: config.public.BASE_API_URL,
     method:'GET',
     params:query.value,
   })
@@ -156,7 +155,7 @@ function clearSearch() {
     query: {}
   })
   query.value = {}
-  getApiData()
+  proposalRefresh()
 }
 
 // 初始化
@@ -174,9 +173,9 @@ async function init() {
     query.value.search = String(route.query.search)
     searchData()
   }
-  getApiData()
+  proposalRefresh()
 }
-init()
+// init()
 
 // SEARCH_CONTROL.value 由 Header 元件操作
 watch(
@@ -193,7 +192,6 @@ watch(
 watch(
   () => query.value.page,
   () => {
-    console.log('test')
     return getApiData()
   }
 )
@@ -273,9 +271,9 @@ watch(
       </div>
     </div>
     <!-- 商品列表 -->
-    <ul v-if="proposalList.length > 0" class="md:flex flex-wrap gap-x-2%">
+    <ul v-if="proposalData.list.length > 0"  class="md:flex flex-wrap gap-x-2%">
       <li
-        v-for="product in proposalList"
+        v-for="product in proposalData.data.list"
         :key="product._id"
         class="w-full md:w-49% lg:w-32%"
       >
