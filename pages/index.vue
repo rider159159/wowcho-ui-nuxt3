@@ -71,6 +71,11 @@ const [ { data:recentlyProposalList },{ data:hotProposalList },{ data:carouselPr
 
 <template>
   <div class="mx-auto flex flex-col items-center">    <!-- Background -->
+    <!-- <Test></Test> -->
+    <GSAP></GSAP>
+    <ClientOnly>
+      <Map></Map>
+    </ClientOnly>
     <div class="absolute left-0 top-0 -z-10">
       <img class="hidden md:block w-1/2" src="/bg_01.png">
       <img class="block md:hidden w-9/10" src="/bg_01_mb.png">
@@ -108,9 +113,9 @@ const [ { data:recentlyProposalList },{ data:hotProposalList },{ data:carouselPr
       </div>
       <!-- 我是為了輪播牆預留的區塊 -->
       <div class="flex justify-center items-center">
-        <CommonCarousel
+        <!-- <CommonCarousel
           :list="carouselProposalList"
-        />
+        /> -->
       </div>
     </div>
     <!-- Category -->
