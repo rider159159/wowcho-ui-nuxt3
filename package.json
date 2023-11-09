@@ -12,7 +12,6 @@
     "vue": "latest"
   },
   "devDependencies": {
-    "@mdi/font": "^7.3.67",
     "@nuxt/devtools": "latest",
     "@types/node": "^20.9.0",
     "@unocss/nuxt": "^0.57.2",

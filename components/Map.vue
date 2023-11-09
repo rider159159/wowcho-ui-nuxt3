@@ -21,7 +21,6 @@ const g = svg.append("g");
 let states
 
 function drawChart() {
-
   zoom.scaleExtent([1, 8])
     .on("zoom", zoomed)
   svg.attr("viewBox", [0, 0, width, height])

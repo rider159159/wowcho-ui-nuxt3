@@ -7,16 +7,15 @@ export default defineNuxtConfig({
     modules: ['navigation', 'pagination'], // all modules are imported by default
   },
   devtools: { enabled: true },
-  "imports": {
+  imports: {
     "dirs": ['stores']
   },
   css: [
     "/assets/style/style.scss", // you should add main.scss somewhere in your app
     'uno.css',
     '@unocss/reset/tailwind-compat.css',
-    '@mdi/font/css/materialdesignicons.min.css'
   ],
-  "app": {
+  app: {
     "head": {
       "viewport": "width=500, initial-scale=1",
       "title": "WowCho 渦潮募資網站",
